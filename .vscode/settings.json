@@ -1,0 +1,29 @@
+{
+  "dotnet.defaultSolution": "__GAME_NAMESPACE__.slnx",
+  "files.exclude": {
+    "**/Library": true,
+    "**/Temp": true,
+    "**/Logs": true,
+    "**/obj": true,
+    "**/Build": true,
+    "**/Builds": true,
+    "**/UserSettings": true,
+    "**/MemoryCaptures": true,
+    "**/Recordings": true
+  },
+  "files.associations": {
+    "*.uxml": "xml",
+    "*.uss": "css",
+    "*.tss": "css",
+    "*.asmdef": "json",
+    "*.asmref": "json",
+    "*.rsp": "plaintext",
+    "*.slnx": "xml"
+  },
+  "editor.formatOnSave": true,
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+  "omnisharp.useEditorFormattingSettings": false,
+  "omnisharp.enableEditorConfigSupport": true
+}

@@ -1,0 +1,30 @@
+name: ASMDEF Dependency Check
+
+on:
+    push:
+        paths:
+            - "**/*.asmdef"
+            - "scripts/check_asmdef_deps.py"
+            - ".github/workflows/**"
+    pull_request:
+        paths:
+            - "**/*.asmdef"
+            - "scripts/check_asmdef_deps.py"
+            - ".github/workflows/**"
+
+jobs:
+    asmdef-deps:
+        name: Check asmdef dependency rules
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                  python-version: "3.x"
+
+            - name: Run asmdef dependency checker
+              run: |
+                  python3 scripts/check_asmdef_deps.py

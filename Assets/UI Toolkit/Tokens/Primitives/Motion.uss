@@ -1,0 +1,9 @@
+:root {
+    --duration-instant:   0ms;
+    --duration-snappy:    120ms;
+    --duration-fast:      150ms;
+    --duration-normal:    200ms;
+    --duration-deliberate: 280ms;
+    --duration-slow:      400ms;
+    --duration-cinematic: 600ms;
+}

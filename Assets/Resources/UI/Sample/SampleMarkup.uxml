@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ui="UnityEngine.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd"
+>
+    <ui:VisualElement class="sample-panel__root">
+        <ui:Label name="greeting" class="sample-panel__greeting" text="(loading)" />
+        <ui:Button name="action-button" class="sample-panel__button" text="Click me" />
+    </ui:VisualElement>
+</ui:UXML>

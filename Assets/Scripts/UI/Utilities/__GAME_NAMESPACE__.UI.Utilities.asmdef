@@ -1,0 +1,18 @@
+{
+  "name": "__GAME_NAMESPACE__.UI.Utilities",
+  "rootNamespace": "__GAME_NAMESPACE__.UI.Utilities",
+  "references": [
+    "UniTask",
+    "LitMotion",
+    "Unity.InputSystem"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

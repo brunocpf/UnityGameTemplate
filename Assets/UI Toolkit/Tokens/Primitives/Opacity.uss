@@ -1,0 +1,11 @@
+:root {
+    --opacity-0:        0;     /* invisible */
+    --opacity-ghost:    0.08;  /* barely-there watermark */
+    --opacity-subtle:   0.25;  /* very faint overlay */
+    --opacity-dim:      0.45;  /* disabled / inactive */
+    --opacity-muted:    0.55;  /* backdrop overlay */
+    --opacity-faded:    0.65;  /* secondary / de-emphasized */
+    --opacity-strong:   0.85;  /* near-opaque panel backgrounds */
+    --opacity-near-full: 0.92; /* opaque with subtle bleed */
+    --opacity-full:     1;     /* fully opaque */
+}

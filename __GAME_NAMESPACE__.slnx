@@ -1,0 +1,10 @@
+<Solution>
+  <Project Path="__GAME_NAMESPACE__.Core.Sample.csproj" />
+  <Project Path="__GAME_NAMESPACE__.UI.Utilities.csproj" />
+  <Project Path="__GAME_NAMESPACE__.UI.Sample.csproj" />
+  <Project Path="__GAME_NAMESPACE__.Unity.Sample.csproj" />
+  <Project Path="__GAME_NAMESPACE__.Core.Sample.Tests.csproj" />
+  <Project Path="__GAME_NAMESPACE__.UI.Sample.PlayModeTests.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
+</Solution>

@@ -1,0 +1,19 @@
+{
+  "name": "__GAME_NAMESPACE__.UI.Sample",
+  "rootNamespace": "__GAME_NAMESPACE__.UI.Sample",
+  "references": [
+    "__GAME_NAMESPACE__.Core.Sample",
+    "__GAME_NAMESPACE__.UI.Utilities",
+    "UniTask",
+    "LitMotion"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

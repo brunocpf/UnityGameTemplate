@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+if ! command -v dotnet >/dev/null 2>&1; then
+  echo "[pre-commit] dotnet CLI not found; skipping format check." >&2
+  exit 0
+fi
+
+# Format only staged C# files for fast pre-commit feedback.
+staged_cs_files=()
+while IFS= read -r -d '' file; do
+  staged_cs_files+=("$file")
+done < <(git diff --cached --name-only --diff-filter=ACMR -z -- '*.cs')
+
+if [[ ${#staged_cs_files[@]} -eq 0 ]]; then
+  exit 0
+fi
+
+echo "[pre-commit] Running dotnet format on ${#staged_cs_files[@]} staged C# file(s)..."
+dotnet format __GAME_NAMESPACE__.slnx --include "${staged_cs_files[@]}" --verify-no-changes --verbosity minimal
+
+git add -- "${staged_cs_files[@]}"
+
+echo "[pre-commit] Formatting complete. Staged files updated."

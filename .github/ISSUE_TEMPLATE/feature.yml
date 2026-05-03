@@ -1,0 +1,42 @@
+name: Feature / Work item
+description: A new feature, mechanic, or work item to schedule.
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: user-story
+    attributes:
+      label: User story
+      placeholder: "As a <role>, I want <goal> so that <reason>."
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: What's in scope for this work item; what's explicitly out of scope.
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies / blockers
+      description: Link any issues this depends on (use GitHub's "blocked by" relationship for tracking).
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Implementation notes
+      description: Architectural hints, references to docs, etc.

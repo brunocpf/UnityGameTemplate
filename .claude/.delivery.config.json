@@ -1,0 +1,11 @@
+{
+  "$comment": "Delivery board configuration consumed by .claude/commands/*.md and .claude/agents/delivery.md. Fill in projectNumber after creating your GitHub Project.",
+  "projectNumber": null,
+  "statusFieldName": "Status",
+  "readyColumn": "Todo",
+  "inProgressColumn": "In Progress",
+  "doneColumn": "Done",
+  "blockedLabel": "blocked",
+  "phaseLabelPrefix": "phase-",
+  "priorityLabels": ["priority:p0", "priority:p1", "priority:p2"]
+}

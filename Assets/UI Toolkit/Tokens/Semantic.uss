@@ -1,0 +1,217 @@
+:root {
+    /* ============================
+       Typography — Typefaces
+       ============================ */
+
+    /* Three canonical typefaces for all UI text */
+    --sys-font-primary:   var(--font-primary);    /* general UI text */
+    --sys-font-secondary: var(--font-secondary);  /* numbers, highlighted values */
+    --sys-font-tertiary:  var(--font-tertiary);   /* titles, headers, labels */
+
+    /* ============================
+       Typography — Size Scale
+       ============================ */
+
+    --sys-font-size-xs:  var(--text-xs);   /* 20px */
+    --sys-font-size-sm:  var(--text-sm);   /* 26px */
+    --sys-font-size-md:  var(--text-md);   /* 32px */
+    --sys-font-size-lg:  var(--text-lg);   /* 40px */
+    --sys-font-size-xl:  var(--text-xl);   /* 48px */
+    --sys-font-size-2xl: var(--text-2xl);  /* 64px */
+    --sys-font-size-3xl: var(--text-3xl);  /* 80px */
+
+    /* ============================
+       Typography — Letter Spacing
+       ============================ */
+
+    --sys-letter-spacing-tight:   var(--letter-spacing-tight);
+    --sys-letter-spacing-normal:  var(--letter-spacing-normal);
+    --sys-letter-spacing-wide:    var(--letter-spacing-wide);
+    --sys-letter-spacing-wider:   var(--letter-spacing-wider);
+    --sys-letter-spacing-display: var(--letter-spacing-display);
+
+    /* ============================
+       Text Colors
+       ============================ */
+
+    --sys-clr-text-primary:  var(--clr-orange-100);        /* warm cream — main readable text */
+    --sys-clr-text-muted:    var(--clr-stone-400);         /* warm gray — supporting text */
+    --sys-clr-text-disabled: var(--clr-stone-400-dim);     /* muted at 45% — inactive text */
+    --sys-clr-text-label:    var(--clr-amber-300);         /* amber — contextual labels */
+    --sys-clr-text-cost:     var(--clr-amber-300);         /* amber — resource cost values */
+    --sys-clr-text-outline:  var(--clr-neutral-950);       /* near-black text outline */
+
+    /* ============================
+       Surfaces & Panels
+       ============================ */
+
+    --sys-clr-bg-main:    var(--clr-gray-900);
+    --sys-clr-bg-surface: var(--clr-gray-800);
+
+    /* Semi-transparent dark panel overlays */
+    --sys-clr-surface:       var(--clr-slate-950-faded);   /* 65% opaque */
+    --sys-clr-surface-strong: var(--clr-slate-950-strong); /* 85% opaque */
+
+    /* Solid dark panel backgrounds */
+    --sys-clr-panel-bg:                  var(--clr-slate-950);
+    --sys-clr-panel-bg-overlay:          var(--clr-slate-950-strong);
+    --sys-clr-panel-bg-elevated:         var(--clr-slate-900);
+    --sys-clr-panel-bg-elevated-overlay: var(--clr-slate-900-strong);
+
+    /* Panel borders */
+    --sys-clr-panel-border:        var(--clr-slate-800);
+    --sys-clr-panel-border-mid:    var(--clr-slate-700);
+    --sys-clr-panel-border-subtle: var(--clr-slate-600);
+    --sys-clr-panel-border-deep:   var(--clr-slate-900);
+    --sys-clr-panel-divider:       var(--clr-slate-800);
+
+    /* Gold surface accents */
+    --sys-clr-surface-border:           var(--clr-amber-400);
+    --sys-clr-surface-border-dim:       var(--clr-amber-400-dim);
+    --sys-clr-surface-border-soft:      var(--clr-amber-400-subtle);
+    --sys-clr-surface-divider:          var(--clr-amber-400-subtle);
+    --sys-clr-surface-highlight:        var(--clr-amber-300-subtle);
+    --sys-clr-surface-highlight-strong: var(--clr-amber-300-dim);
+
+    /* ============================
+       Brand & Status
+       ============================ */
+
+    --sys-clr-border:      var(--clr-gray-700);
+    --sys-clr-brand:       var(--clr-blue-500);
+    --sys-clr-brand-hover: var(--clr-blue-600);
+    --sys-clr-danger:      var(--clr-red-500);
+
+    /* ============================
+       Interactive Accent (Teal)
+       ============================ */
+
+    --sys-clr-accent-interactive:        var(--clr-teal-400);
+    --sys-clr-accent-interactive-light:  var(--clr-teal-300);
+    --sys-clr-accent-interactive-bright: var(--clr-teal-200);
+    --sys-clr-accent-interactive-glow-bright: var(--clr-teal-500);
+    --sys-clr-accent-interactive-glow-dark:   var(--clr-teal-900);
+
+    /* ============================
+       Team & State Accents
+       ============================ */
+
+    --sys-clr-accent-player:      var(--clr-blue-300);
+    --sys-clr-accent-player-soft: var(--clr-blue-300-subtle);
+    --sys-clr-accent-enemy:       var(--clr-red-400);
+    --sys-clr-accent-enemy-soft:  var(--clr-red-400-subtle);
+    --sys-clr-accent-pass:        var(--clr-sky-200);
+    --sys-clr-accent-auto:        var(--clr-violet-300);
+    --sys-clr-accent-focus:       var(--clr-amber-200);
+    --sys-clr-accent-focus-soft:  var(--clr-amber-200-muted);
+
+    /* ============================
+       Skill Element Affinities
+       ============================ */
+
+    --sys-clr-element-physical: var(--clr-neutral-400);
+    --sys-clr-element-fire:     var(--clr-orange-500);
+    --sys-clr-element-ice:      var(--clr-sky-300);
+    --sys-clr-element-electric: var(--clr-yellow-300);
+    --sys-clr-element-wind:     var(--clr-green-300);
+    --sys-clr-element-light:    var(--clr-amber-100);
+    --sys-clr-element-dark:     var(--clr-purple-700);
+    --sys-clr-element-almighty: var(--clr-fuchsia-300);
+
+    /* ============================
+       Resource Meters
+       ============================ */
+
+    --sys-clr-meter-track:     var(--clr-neutral-950-muted);
+    --sys-clr-meter-hp-fill:   var(--clr-lime-500);
+    --sys-clr-meter-mp-fill:   var(--clr-yellow-300);
+
+    /* Resource delta — used by meter trails and damage/heal popups */
+    --sys-clr-hp-dmg:    var(--clr-red-500);
+    --sys-clr-hp-heal:   var(--clr-blue-500);
+    --sys-clr-mp-dmg:    var(--clr-purple-500);
+    --sys-clr-mp-heal:   var(--clr-blue-300);
+
+    /* ============================
+       Text Outlines
+       ============================ */
+
+    --sys-text-outline-width-none: 0;
+    --sys-text-outline-width-sm:   0.8px;
+    --sys-text-outline-width-md:   1.5px;
+    --sys-text-outline-width-lg:   3px;
+
+    --sys-clr-text-outline-none:   var(--shadow-clr-none);
+    --sys-clr-text-outline-strong: var(--clr-neutral-950-faded);
+    --sys-clr-text-outline-brand:  var(--clr-blue-600-strong);
+
+    /* ============================
+       Text Shadows
+       ============================ */
+
+    --sys-text-shadow-none: 0 0 0 var(--shadow-clr-none);
+    --sys-text-shadow-sm:   0 var(--shadow-offset-sm) var(--shadow-blur-sm) var(--shadow-clr-subtle);
+    --sys-text-shadow-md:   0 var(--shadow-offset-md) var(--shadow-blur-md) var(--shadow-clr-soft);
+    --sys-text-shadow-lg:   0 var(--shadow-offset-lg) var(--shadow-blur-lg) var(--shadow-clr-mid);
+
+    /* ============================
+       Surface Shadows
+       ============================ */
+
+    --sys-shadow-sm: 0 var(--shadow-offset-sm) var(--shadow-blur-sm) var(--shadow-clr-subtle);
+    --sys-shadow-md: 0 var(--shadow-offset-md) var(--shadow-blur-md) var(--shadow-clr-soft);
+    --sys-shadow-lg: 0 var(--shadow-offset-lg) var(--shadow-blur-lg) var(--shadow-clr-mid);
+
+    /* ============================
+       Spacing Aliases
+       ============================ */
+
+    --sys-space-tight:   var(--space-1);   /* 4px  */
+    --sys-space-default: var(--space-2);   /* 8px  */
+    --sys-space-roomy:   var(--space-4);   /* 16px */
+    --sys-space-section: var(--space-6);   /* 24px */
+
+    /* ============================
+       Border Radii
+       ============================ */
+
+    --sys-radius-none: var(--rounded-none);
+    --sys-radius-xs:   var(--rounded-xs);    /* 3px   */
+    --sys-radius-sm:   var(--rounded-sm);    /* 6px   */
+    --sys-radius-md:   var(--rounded-md);    /* 8px   */
+    --sys-radius-lg:   var(--rounded-lg);    /* 12px  */
+    --sys-radius-xl:   var(--rounded-xl);   /* 16px  */
+    --sys-radius-2xl:  var(--rounded-2xl);  /* 24px  */
+    --sys-radius-full: var(--rounded-full);  /* 9999px */
+
+    /* ============================
+       Border Widths
+       ============================ */
+
+    --sys-border-thin:   var(--border-1);   /* 1px */
+    --sys-border-medium: var(--border-2);   /* 2px */
+    --sys-border-thick:  var(--border-3);   /* 3px */
+
+    /* ============================
+       Motion
+       ============================ */
+
+    --sys-anim-snappy:  var(--duration-snappy);
+    --sys-anim-fast:    var(--duration-fast);
+    --sys-anim-normal:  var(--duration-normal);
+    --sys-anim-fade:    var(--duration-deliberate);
+    --sys-anim-stately: var(--duration-slow);
+
+    /* ============================
+       Opacity
+       ============================ */
+    --sys-invisible: var(--opacity-0);
+    --sys-ghost: var(--opacity-ghost);
+    --sys-subtle: var(--opacity-subtle);
+    --sys-dim: var(--opacity-dim);
+    --sys-muted: var(--opacity-muted);
+    --sys-faded: var(--opacity-faded);
+    --sys-strong: var(--opacity-strong);
+    --sys-near-full: var(--opacity-near-full);
+    --sys-opaque: var(--opacity-full);
+}

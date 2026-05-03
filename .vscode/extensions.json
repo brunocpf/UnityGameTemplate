@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "ms-dotnettools.csharp",
+    "ms-dotnettools.csdevkit",
+    "VisualStudioExptTeam.vscodeintellicode",
+    "EditorConfig.EditorConfig",
+    "Unity.unity-debug",
+    "kleber-swf.unity-code-snippets",
+    "ms-python.python"
+  ]
+}

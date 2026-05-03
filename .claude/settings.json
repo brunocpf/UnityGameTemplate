@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet build*)",
+      "Bash(dotnet format * --verify-no-changes*)",
+      "Bash(python3 scripts/check_asmdef_deps.py)",
+      "Bash(./scripts/run-tests.sh*)",
+      "Bash(git status*)",
+      "Bash(git log*)",
+      "Bash(git diff*)",
+      "Bash(git branch*)",
+      "Bash(gh issue list*)",
+      "Bash(gh issue view*)",
+      "Bash(gh pr list*)",
+      "Bash(gh pr view*)",
+      "Bash(gh project item-list*)",
+      "Bash(gh project field-list*)",
+      "Bash(gh label list*)",
+      "Bash(gh api graphql*)",
+      "Bash(gh repo*)",
+      "Bash(gh project *)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'echo \"$CLAUDE_TOOL_INPUT\" | grep -q \"\\.asmdef\" && python3 scripts/check_asmdef_deps.py || true'"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+.sample-panel {
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.sample-panel__root {
+    padding: 24px;
+    align-items: center;
+    background-color: var(--sys-clr-panel-bg, rgba(20, 20, 24, 0.85));
+}
+
+.sample-panel__greeting {
+    font-size: var(--sys-font-size-lg, 40px);
+    color: var(--sys-clr-text-primary, white);
+    -unity-font-definition: var(--sys-font-tertiary);
+    margin-bottom: 16px;
+}
+
+.sample-panel__button {
+    padding: 8px 16px;
+    font-size: var(--sys-font-size-md, 32px);
+    -unity-font-definition: var(--sys-font-primary);
+}

@@ -1,0 +1,24 @@
+:root {
+    --shadow-clr-none:   rgba(0, 0, 0, 0);
+    --shadow-clr-subtle: rgba(0, 0, 0, 0.20);
+    --shadow-clr-soft:   rgba(0, 0, 0, 0.28);
+    --shadow-clr-mid:    rgba(0, 0, 0, 0.35);
+    --shadow-clr-strong: rgba(0, 0, 0, 0.50);
+    --shadow-clr-heavy:  rgba(0, 0, 0, 0.70);
+
+    --shadow-clr-glow-gold:   rgba(196, 158, 86, 0.55);
+    --shadow-clr-glow-player: rgba(120, 196, 255, 0.55);
+    --shadow-clr-glow-enemy:  rgba(220, 90, 90, 0.55);
+    --shadow-clr-glow-focus:  rgba(255, 230, 140, 0.65);
+
+    --shadow-offset-xs: 1px;
+    --shadow-offset-sm: 2px;
+    --shadow-offset-md: 4px;
+    --shadow-offset-lg: 8px;
+    --shadow-offset-xl: 16px;
+
+    --shadow-blur-sm: 3px;
+    --shadow-blur-md: 10px;
+    --shadow-blur-lg: 24px;
+    --shadow-blur-xl: 40px;
+}

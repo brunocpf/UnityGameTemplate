@@ -1,0 +1,17 @@
+:root {
+    --rounded-none: 0px;
+    --rounded-xs:   3px;
+    --rounded-sm:   6px;
+    --rounded:      8px;
+    --rounded-md:   8px;
+    --rounded-lg:   12px;
+    --rounded-xl:   16px;
+    --rounded-2xl:  24px;
+    --rounded-full: 9999px;
+
+    --border-0:   0px;
+    --border-1:   1px;
+    --border-2:   2px;
+    --border-3:   3px;
+    --border-4:   4px;
+}

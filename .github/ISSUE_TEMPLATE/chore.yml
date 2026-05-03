@@ -1,0 +1,31 @@
+name: Chore / Tech debt
+description: Refactor, cleanup, tooling, or other non-user-facing work.
+title: "[Chore] "
+labels: ["chore"]
+body:
+  - type: textarea
+    id: scope
+    attributes:
+      label: What's the scope?
+      description: What are you cleaning up, refactoring, or improving?
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Why now?
+      description: What pain or risk does this address? What unblocks it?
+    validations:
+      required: true
+
+  - type: textarea
+    id: verification
+    attributes:
+      label: Verification
+      description: How will you confirm the change is safe?
+      placeholder: |
+        - [ ] All tests pass
+        - [ ] No regressions in ...
+    validations:
+      required: true

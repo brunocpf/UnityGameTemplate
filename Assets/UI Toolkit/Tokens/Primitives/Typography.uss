@@ -1,0 +1,52 @@
+:root {
+    /* ============================
+       Font slots
+       ----------------------------
+       Three canonical font slots for the project. Replace each `initial`
+       with a `url("project://database/...your-font.asset?fileID=...&guid=...&type=2#FontName")`
+       reference once you've imported your TMP_FontAsset / SDF font assets.
+       Keep additional weights as separate vars (e.g. --font-primary-bold)
+       and reference them from Semantic.uss as the design system grows.
+       ============================ */
+
+    --font-primary:           initial; /* TODO: general UI text */
+    --font-primary-bold:      initial;
+    --font-primary-italic:    initial;
+
+    --font-secondary:         initial; /* TODO: numbers, highlighted values */
+    --font-secondary-bold:    initial;
+
+    --font-tertiary:          initial; /* TODO: titles, headers, labels */
+    --font-tertiary-bold:     initial;
+
+    /* ============================
+       Text size scale
+       ----------------------------
+       Logical px at 1920x1080 reference. Tweak to your target resolution.
+       ============================ */
+
+    --text-xs:  20px;
+    --text-sm:  26px;
+    --text-md:  32px;
+    --text-lg:  40px;
+    --text-xl:  48px;
+    --text-2xl: 64px;
+    --text-3xl: 80px;
+
+    /* ============================
+       Text outlines
+       ============================ */
+
+    --text-outline-0: 0;
+    --text-outline-1: 1.5px;
+
+    /* ============================
+       Letter spacing
+       ============================ */
+
+    --letter-spacing-tight:   -0.2px;
+    --letter-spacing-normal:  0;
+    --letter-spacing-wide:    0.4px;
+    --letter-spacing-wider:   0.8px;
+    --letter-spacing-display: 1.2px;
+}

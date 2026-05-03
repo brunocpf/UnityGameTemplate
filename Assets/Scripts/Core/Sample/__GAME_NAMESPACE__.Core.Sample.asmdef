@@ -1,0 +1,14 @@
+{
+  "name": "__GAME_NAMESPACE__.Core.Sample",
+  "rootNamespace": "__GAME_NAMESPACE__.Core.Sample",
+  "references": [],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": true
+}
