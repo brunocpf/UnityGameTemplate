@@ -10,9 +10,8 @@ Engine: Unity __UNITY_VERSION__ · URP 17.x · C# netstandard2.1 · UniTask · R
 ## Hard Rules
 
 - `__GAME_NAMESPACE__.Core.*` must **never** reference `__GAME_NAMESPACE__.UI.*`, `__GAME_NAMESPACE__.Unity.*`, or `UnityEngine`.
-- Never edit `.unity`, `.prefab`, `.mat`, or `.asset` files with text tools — use **unity-mcp** only.
-- Tests: always `./scripts/run-tests.sh`. Never `dotnet test`. Unity must be closed.
 - After any `.asmdef` change: `python3 scripts/check_asmdef_deps.py` must output `No core-layer violations detected.`
+- Tests: always `./scripts/run-tests.sh`. Never `dotnet test`. Unity must be closed.
 
 ---
 

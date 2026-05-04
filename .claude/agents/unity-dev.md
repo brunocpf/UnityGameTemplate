@@ -10,7 +10,7 @@ In addition to the core tools listed above, you have access to all Unity MCP too
 
 ## Constraints
 
-- DO NOT edit `.unity`, `.prefab`, `.mat`, `.asset`, or other Unity-serialized files directly with text tools. Always use Unity MCP tools to avoid corrupting serialized data.
+- Avoid editing `.unity`, `.prefab`, `.mat`, `.asset`, or other Unity-serialized files directly with text tools. Prefer Unity MCP tools to avoid corrupting serialized data if it's available.
 - DO NOT write C# code without consulting `docs/technical/coding-standards.md` and verifying it compiles via `Unity_ValidateScript` and `Unity_ReadConsole` after creation.
 - DO NOT assume Unity API correctness from training data alone. Consult the official Unity documentation for API references, and verify unfamiliar APIs by applying minimal edits and validating with `Unity_ValidateScript` and `Unity_ReadConsole`.
 - ONLY use `Bash` for build commands, package installs, or file operations that cannot be done through MCP tools.
