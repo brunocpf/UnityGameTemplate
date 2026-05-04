@@ -150,11 +150,11 @@ Styling layers:
 - Keep global tokens in TSS and local control details in USS.
 - Derive shared USS values from theme tokens using custom USS variables instead of duplicating theme values in component USS.
 
-Panel navigation:
+View navigation:
 
-- Larger views (inventory, character sheet, settings) should derive from a shared `Panel : VisualElement` base.
-- Panel navigation should go through `PanelStackController` using `Push`, `Pop`, `Clear`, and `Peek`.
-- `Panel` should provide shared focus handling and transition lifecycle hooks (`Enter`, `Exit`, `Reveal`, `Cover`).
+- Larger views (main menu, settings, HUD screens) should derive from `MenuPanel` (a lightweight `VisualElement` base with `focusable = true` and `delegatesFocus = true`).
+- Navigation should go through `Router<TKey>` from `__GAME_NAMESPACE__.UI.Utilities` using `GoTo`, `Back`, `Reset`, and `Clear`.
+- Transition animations and lifecycle hooks (`Enter`, `Exit`, `Cover`, `Reveal`) are configured per-route in `RouteSpec`, not in the view itself.
 
 ## MonoBehaviour Guidelines
 

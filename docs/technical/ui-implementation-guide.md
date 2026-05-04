@@ -15,26 +15,26 @@ Read this together with:
 Use a plain `VisualElement`-based custom control when:
 
 - the element renders local state only
-- it does not participate in stack navigation
+- it does not participate in router navigation
 - it does not need enter/exit/reveal/cover transitions
 - it is a reusable part of a larger screen
 
-Use a `Panel` (extends `VisualElement`, implements `IPanelLayer`) when:
+Use a `MenuPanel` (extends `VisualElement`) registered with a `Router<TKey>` when:
 
-- the layer has visual content pushed onto a `PanelStackController`
-- the layer needs focus restoration
-- the layer owns a temporary navigation layer or submenu flow
-- the layer needs explicit transition hooks
+- the view is a top-level screen or modal registered as a named route
+- the view needs focus restoration when navigated back to
+- the view needs enter/exit/cover/reveal transition animations
+- the view owns a temporary navigation layer or submenu flow
 
-Use a plain `IPanelLayer` (no `VisualElement`) when:
+Use a route with `RouteSpec.Element = null` when:
 
-- the layer has no visual content of its own
-- it delegates interaction (focus, action map) to an existing view that stays on screen
+- the route has no visual content of its own (interaction-only mode that delegates to an existing view)
+- implement behaviour through `OnEnter`/`OnExit`/`OnCover`/`OnReveal` hooks and `OnRestoreFocus`
 
 Examples (template `Sample` slice):
 
-- `SampleStatusBadge` is a control
-- `SampleViewPanel` and `SampleSelectionPanel` are stack-managed views
+- `SamplePanel` is a plain `VisualElement` control — it renders state and does not participate in routing
+- a real project's main menu, options screen, or HUD panels would be `MenuPanel` subclasses registered with a `Router`
 
 ## Recommended Layer Split
 
@@ -48,22 +48,20 @@ Do not move gameplay rules or domain validation into a `VisualElement`, `Panel`,
 
 ## Control Layout Pattern
 
-Each custom control should stay colocated with its UXML and USS.
-
-Recommended layout:
+Scripts live in the UI assembly; markup and style assets are centralized under `Assets/Resources/`.
 
 ```text
-Assets/Scripts/UI/<Feature>/<ControlName>/
-    <ControlName>.cs
-    Resources/
-        UI/
-            <Feature>/
-                <ControlName>/
-                    <ControlName>Markup.uxml
-                    <ControlName>Styles.uss
+Assets/Scripts/UI/<Feature>/
+    <ControlName>/
+        <ControlName>.cs
+
+Assets/Resources/UI/<Feature>/
+    <ControlName>/
+        <ControlName>Markup.uxml
+        <ControlName>Styles.uss
 ```
 
-Load markup through `UiMarkupResources.CloneInto(...)` instead of direct `Resources.Load` calls.
+Load markup through `UiMarkupResources.CloneInto(...)` — never call `Resources.Load` directly in a control constructor.
 
 ## UxmlAttribute vs Bind vs Constructor Preview
 
@@ -216,24 +214,26 @@ Rules:
 - release subscriptions deterministically
 - add disposal regression tests when a subscription bug is fixed
 
-## Panel Stack Rules
+## Router Navigation Rules
 
-When a screen uses nested menus or modal overlays, route navigation through `PanelStackController`.
+When a screen uses nested menus or modal overlays, route navigation through `Router<TKey>`.
 
 Expected behavior:
 
-- `Push` covers the previous panel and activates the next panel
-- `Pop` exits the current panel and reveals the previous panel
-- `Clear` removes the full stack in a controlled order
-- `Peek` inspects the current panel without mutation
+- `GoTo(key)` — push a new route (or unwind to it if already in the stack)
+- `Back()` — exit current route, reveal the previous one
+- `Reset(rootKey)` — clear the entire stack, push a root route
+- `Clear()` — exit all routes in parallel
 
-Layers should:
+Route views should:
 
-- implement `IPanelLayer` — either by extending `Panel` (visual) or as a plain C# object (non-visual)
-- keep transition methods side-effect-light and testable
-- rely on `RestoreFocus` rather than ad hoc focus grabbing
+- be `MenuPanel` subclasses registered before any navigation starts
+- keep `OnEnter`/`OnExit`/`OnCover`/`OnReveal` hooks side-effect-light and testable
+- rely on `RouteSpec.OnRestoreFocus` rather than ad hoc focus grabbing
 
-Non-visual layers (interaction modes that delegate focus to an existing view rather than owning DOM content) implement `AttachTo`, `Detach`, and `SetStackInteractive` as no-ops and manage focus through `Enter`/`Exit`/`Cover`/`Reveal`.
+Element-less routes (interaction modes that delegate focus to an existing view) set `RouteSpec.Element = null` and manage focus exclusively through `OnEnter`/`OnExit` hooks and `OnRestoreFocus`.
+
+The router owner (typically a MonoBehaviour) must call `router.Dispose()` on `OnDestroy` or `OnDisable`.
 
 ## Composition Guidance
 

@@ -13,9 +13,9 @@ namespace __GAME_NAMESPACE__.UI.Utilities
     [UxmlElement]
     public partial class MenuButton : Button
     {
-        public static new readonly string ussClassName = "menu-button";
-        public static readonly string softDisabledUssClassName = ussClassName + "--soft-disabled";
-        public static readonly string softActiveUssClassName = ussClassName + "--soft-active";
+        private const string _rootClass = "menu-button";
+        private const string _softDisabledUssClassName = _rootClass + "--soft-disabled";
+        private const string _softActiveUssClassName = _rootClass + "--soft-active";
 
         private bool _softDisabled;
         private bool _softActive;
@@ -24,7 +24,7 @@ namespace __GAME_NAMESPACE__.UI.Utilities
 
         public MenuButton(Action? clickEvent) : base(clickEvent)
         {
-            AddToClassList(ussClassName);
+            AddToClassList(_rootClass);
             this.AddManipulator(new HoverFocusManipulator());
             RegisterCallback<ClickEvent>(OnClick, TrickleDown.TrickleDown);
             RegisterCallback<NavigationSubmitEvent>(OnNavigationSubmit, TrickleDown.TrickleDown);
@@ -37,7 +37,7 @@ namespace __GAME_NAMESPACE__.UI.Utilities
             set
             {
                 _softDisabled = value;
-                EnableInClassList(softDisabledUssClassName, value);
+                EnableInClassList(_softDisabledUssClassName, value);
             }
         }
 
@@ -48,7 +48,7 @@ namespace __GAME_NAMESPACE__.UI.Utilities
             set
             {
                 _softActive = value;
-                EnableInClassList(softActiveUssClassName, value);
+                EnableInClassList(_softActiveUssClassName, value);
             }
         }
 

@@ -9,20 +9,22 @@ __GAME_DISPLAY_NAME__ uses **Unity UI Toolkit** for all runtime UI.
 
 ## Control Model
 
-Each custom UI component lives in its own folder in the corresponding UI assembly.
+Each custom UI component's script lives in the corresponding UI assembly. Markup and style assets live in a **centralized** `Assets/Resources/` tree — **not colocated with the script**.
 
-Recommended layout:
+Script layout:
 
 ```text
-__GAME_NAMESPACE__.UI.<Feature>/
+Assets/Scripts/UI/<Feature>/
   <ControlName>/
     <ControlName>.cs
-        Resources/
-            UI/
-                <Feature>/
-                    <ControlName>/
-                        <ControlName>Markup.uxml      (optional)
-                        <ControlName>Styles.uss       (optional)
+```
+
+Resource layout:
+
+```text
+Assets/Resources/UI/<Feature>/<ControlName>/
+    <ControlName>Markup.uxml      (optional)
+    <ControlName>Styles.uss       (optional)
 ```
 
 Naming rules:
@@ -32,7 +34,7 @@ Naming rules:
 - Styling: `<ControlName>Styles.uss`
 - Resource path: `UI/<Feature>/<ControlName>/<ControlName>Markup`
 
-All custom controls should derive from `VisualElement`.
+All custom controls derive from `VisualElement` (simple controls) or `MenuPanel` (router-managed views — see Router section below).
 
 ## USS Naming Convention (BEM)
 
@@ -58,25 +60,17 @@ Guidelines:
 </ui:UXML>
 ```
 
-## Component-Local Resources Pattern
+## Markup Loading Pattern
 
-Custom controls that use UXML/USS should load those assets through a component-local `Resources` path so the control stays colocated and renders correctly in UI Builder.
+Custom controls load their UXML/USS through the centralized `Assets/Resources/` hierarchy using the `UiMarkupResources` helper from `__GAME_NAMESPACE__.UI.Utilities`.
 
-Design intent:
+Rules:
 
-- Constructor builds a ready-to-use visual tree.
-- Markup and styles are encapsulated per control.
-- The same control works in both runtime and UI Builder.
-
-
-Recommended pattern:
-
-1. Place each control's markup and styles under a `Resources/UI/<Feature>/<ControlName>/` subfolder inside the control folder, matching the control's namespace and feature.
-2. Use globally unique resource paths such as `UI/Sample/SamplePanel/SamplePanelMarkup`.
-3. Load and cache markup using the shared public helper `UiMarkupResources` from the `__GAME_NAMESPACE__.UI.Utilities` assembly.
-4. Restrict `Resources` usage to small UI Toolkit markup and style assets that are always shipped with the build.
-5. Do not use Addressables or Resources.Load directly in control constructors—always use the helper for consistency and caching.
-6. The helper throws an `InvalidOperationException` for missing assets.
+1. Place each control's markup and styles under `Assets/Resources/UI/<Feature>/<ControlName>/`.
+2. Use globally unique resource paths such as `UI/Sample/SampleMarkup`.
+3. Load and cache markup with `UiMarkupResources.CloneInto(...)` — never call `Resources.Load` directly in a control constructor.
+4. Restrict `Resources` usage to small UI Toolkit markup and style assets always shipped with the build.
+5. The helper throws `InvalidOperationException` for missing asset paths.
 
 **Standard usage:**
 
@@ -87,37 +81,26 @@ using UnityEngine.UIElements;
 [UxmlElement]
 public sealed partial class SamplePanel : VisualElement
 {
-    private const string _markupPath = "UI/Sample/SamplePanel/SamplePanelMarkup";
-    private const string _rootClass = "sample-panel";
+    private const string MARKUP_PATH = "UI/Sample/SampleMarkup";
+    private const string ROOT_CLASS = "sample-panel";
 
     public SamplePanel()
     {
-        UiMarkupResources.CloneInto(this, _markupPath, _rootClass);
+        UiMarkupResources.CloneInto(this, MARKUP_PATH, ROOT_CLASS);
     }
 }
 ```
 
-This pattern keeps markup colocated, minimizes boilerplate, and ensures UI Builder compatibility.
-
-### Why this is the preferred pattern for this project
-
-- Keeps UXML and USS colocated with the control implementation.
-- Works in UI Builder without editor-only loaders or runtime bootstrap infrastructure.
-- Keeps per-instance construction simple while avoiding repeated `Resources.Load` calls.
-- Limits `Resources` usage to small always-shipped UI assets.
-
-
 ## Directory and Naming Example
 
 ```text
-Assets/Scripts/UI/Sample/SamplePanel/
-    SamplePanel.cs
-    Resources/
-        UI/
-            Sample/
-                SamplePanel/
-                    SamplePanelMarkup.uxml
-                    SamplePanelStyles.uss
+Assets/Scripts/UI/Sample/
+    SamplePanel/
+        SamplePanel.cs
+
+Assets/Resources/UI/Sample/
+    SampleMarkup.uxml
+    SampleStyles.uss
 ```
 
 ## Theming and Styling
@@ -191,117 +174,80 @@ Tier 2 → Semantic.uss
 (Tier 3 loaded per-component, not in Theme.tss)
 ```
 
-## Panel Stack Navigation
+## Router-Based Navigation
 
-Larger views (inventory, character sheet, settings, etc.) are managed through a `PanelStackController`. The stack works against `IPanelLayer` — not `Panel` directly — so layers may or may not be `VisualElement`s.
+Larger views are managed through `Router<TKey>` from `__GAME_NAMESPACE__.UI.Utilities`. The router is a generic, key-based, reactive navigator with a serialized async operation queue — concurrent `GoTo`/`Back`/`Reset` calls are automatically chained.
 
-- `PanelStackController` API includes:
-  - `Push`
-  - `Pop`
-  - `Clear`
-  - `Peek`
-
-Expected behavior:
-
-- `Push`: cover current layer and enter the new one.
-- `Pop`: exit top layer and reveal the previous one.
-- `Clear`: empty the stack in a controlled order.
-- `Peek`: inspect the current top layer without mutation.
-
-Implementation guidance for deciding between plain `VisualElement` controls and stack-managed layers lives in [ui-implementation-guide.md](ui-implementation-guide.md).
-
-## IPanelLayer Contract
-
-`IPanelLayer` is the interface `PanelStackController` operates on. Most layers implement it by extending `Panel` (a `VisualElement` base class). Non-visual layers (e.g. interaction-only modes that delegate to existing views) implement `IPanelLayer` directly as plain C# objects, with no-op `AttachTo`/`Detach` methods.
+### API
 
 ```csharp
-public interface IPanelLayer
+Router<TKey> router = new();
+
+// Register routes before navigating.
+router.Register(MyKey.Home, new RouteSpec { Element = homePanel, Transition = RouteTransitions.Fade(0.15f) });
+router.Register(MyKey.Settings, new RouteSpec { Element = settingsPanel });
+
+// Navigate.
+await router.GoTo(MyKey.Settings);   // push Settings (or unwind if already in stack)
+await router.Back();                 // pop to previous
+await router.Reset(MyKey.Home);      // clear stack, push Home
+await router.Clear();                // exit all routes
+
+// React to current route.
+router.Current.Subscribe(key => Debug.Log($"Now at {key}"));
+router.Stack.Subscribe(keys => /* full stack snapshot */);
+
+router.Dispose();                    // detaches all routes, disposes observables
+```
+
+### RouteSpec
+
+`RouteSpec` is the registration record for one route. All members are `init`-only:
+
+```csharp
+new RouteSpec
 {
-    string ActionMapName { get; }
-
-    // Visual attachment — no-op for non-visual layers.
-    void AttachTo(VisualElement host);
-    void Detach();
-
-    // Interaction state.
-    void SetStackInteractive(bool isInteractive);
-    void RestoreFocus();
-
-    // Lifecycle transitions.
-    UniTask Enter();
-    UniTask Exit();
-    UniTask Cover();
-    UniTask Reveal();
+    Element      = myVisualElement,                          // auto-managed (enabled, picking, focus)
+    Transition   = RouteTransitions.Fade(0.2f),             // animation (default: RouteTransitions.None)
+    OnEnter      = ct => DoWorkAsync(ct),                   // optional async hook (runs with transition)
+    OnExit       = ct => ...,
+    OnCover      = ct => ...,
+    OnReveal     = ct => ...,
+    OnRestoreFocus = () => myElement.Focus(),               // for Element-less routes
 }
 ```
 
-## Base Panel Contract
+### IRouteTransition
 
-`Panel` is the standard `VisualElement`-based implementation of `IPanelLayer`. `AttachTo` handles DOM insertion and initial display setup; `Detach` removes and hides the element. Subclasses override the lifecycle transitions and `RestoreFocus` as needed.
+Implement `IRouteTransition` for custom animations. Built-in implementations in `RouteTransitions`:
 
-Reference shape:
+- `RouteTransitions.None` — instant, no animation (default)
+- `RouteTransitions.Fade(float duration, float coveredOpacity = 0.5f)` — opacity tween via LitMotion
+
+### MenuPanel base class
+
+`MenuPanel` is a lightweight `VisualElement` base class that enables focusable, delegated-focus behaviour. Use it for views registered with the router.
 
 ```csharp
-public abstract class Panel : VisualElement, IPanelLayer
+[UxmlElement]
+public sealed partial class MyView : MenuPanel
 {
-    public abstract string ActionMapName { get; }
-
-    public Panel()
+    public MyView()
     {
-        focusable = true;
-        delegatesFocus = true;
-        pickingMode = PickingMode.Position;
-
-        RegisterCallback<FocusInEvent>(HandleFocusIn);
-    }
-
-    public virtual void AttachTo(VisualElement host) { /* sets display flex, adds to host */ }
-    public virtual void Detach()                     { /* sets display none, removes from host */ }
-
-    public virtual UniTask Enter()   => UniTask.CompletedTask;
-    public virtual UniTask Exit()    => UniTask.CompletedTask;
-    public virtual UniTask Reveal()  => UniTask.CompletedTask;
-    public virtual UniTask Cover()   => UniTask.CompletedTask;
-
-    public virtual void RestoreFocus()       { /* re-enables interaction, restores last focused child */ }
-    public void SetStackInteractive(bool isInteractive) { /* SetEnabled + pickingMode + blur */ }
-
-    private void HandleFocusIn(FocusInEvent evt)
-    {
-        if (_isStackInteractive && evt.target is VisualElement child && child != this)
-        {
-            _lastFocusedElement = child;
-        }
-    }
-
-    private void RestoreFocusInternal()
-    {
-        if (_lastFocusedElement != null && _lastFocusedElement.panel != null && _lastFocusedElement.canGrabFocus)
-        {
-            _lastFocusedElement.Focus();
-            return;
-        }
-
-        if (canGrabFocus)
-        {
-            Focus();
-        }
-    }
-
-    private void BlurFocusedDescendant()
-    {
-        if (focusController?.focusedElement is not VisualElement focusedElement)
-        {
-            return;
-        }
-
-        if (Contains(focusedElement))
-        {
-            focusedElement.Blur();
-        }
+        UiMarkupResources.CloneInto(this, "UI/MyFeature/MyViewMarkup", "my-view");
     }
 }
 ```
+
+Focus, `pickingMode`, and interaction state are managed by `Router<TKey>` — `MenuPanel` only sets up the initial `focusable = true`, `delegatesFocus = true`.
+
+### Router lifecycle ownership
+
+- The router should be owned by a MonoBehaviour or composite view controller that controls the owning scene lifetime.
+- Call `router.Dispose()` in `OnDestroy`/`OnDisable` to clean up observables and event callbacks.
+- All registered `Element` callbacks are unregistered on `Dispose`.
+
+See [ui-implementation-guide.md](ui-implementation-guide.md) for guidance on when to use the router vs. plain `VisualElement` controls.
 
 ## Reactive Subscription Guidance
 
